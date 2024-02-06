@@ -15,6 +15,15 @@ export default {
         success: colors.emerald,
         danger: colors.red,
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            a: {
+              'word-wrap': 'break-word',
+            },
+          },
+        },
+      },
     },
   },
   plugins: [require('@tailwindcss/typography')],
