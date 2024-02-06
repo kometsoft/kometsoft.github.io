@@ -3,7 +3,7 @@ title: Kometsoft's Appointment as an AWS Select Partner
 description: We are proud to announce that Kometsoft (M) Sdn Bhd has achieved the AWS Select Partner status!
 publishDate: Jan 3 2023
 category: news
-image: https://kometsoft.com.my/media/4/aws-partner.png
+image: /images/aws-partner.webp
 ---
 
 We are proud to announce that Kometsoft (M) Sdn Bhd has achieved the AWS Select Partner status!

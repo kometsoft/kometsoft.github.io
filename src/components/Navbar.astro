@@ -71,12 +71,14 @@ const currentPath = Astro.url.pathname
 </div>
 
 <script>
-  const toggleButtons = document.getElementsByClassName('toggle-button')
-  const menu = document.getElementById('menu')
+  document.addEventListener('astro:page-load', () => {
+    const toggleButtons = document.getElementsByClassName('toggle-button')
+    const menu = document.getElementById('menu')
 
-  for (const button of toggleButtons) {
-    button.addEventListener('click', function () {
-      menu.classList.toggle('hidden')
-    })
-  }
+    for (const button of toggleButtons) {
+      button.addEventListener('click', function () {
+        menu.classList.toggle('hidden')
+      })
+    }
+  })
 </script>

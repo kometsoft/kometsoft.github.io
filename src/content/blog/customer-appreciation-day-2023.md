@@ -3,7 +3,7 @@ title: Get Ready for an Exciting Kometsoft Customer Appreciation Day 2023
 description: We are excited to announce our upcoming Customer Appreciation Day on 19th January 2023.
 publishDate: Jan 1 2023
 category: news
-image: https://kometsoft.com.my/media/3/gradient.png
+image: /images/gradient.webp
 ---
 
 Attention all valued customers!

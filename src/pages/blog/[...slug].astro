@@ -14,7 +14,6 @@ const post = Astro.props
 const { Content } = await post.render()
 ---
 
-<!-- <BlogPost {...post.data}> -->
 <Layout title="Blog">
   <div class="bg-white py-6 sm:py-8 lg:py-12">
     <div class="max-w-screen-md px-4 md:px-8 mx-auto">
@@ -23,7 +22,7 @@ const { Content } = await post.render()
           <span class="text-sm font-bold uppercase tracking-widest text-primary-500">Post</span>
           <h1 class="text-gray-800 text-2xl lg:text-3xl font-bold text-center mb-4">{post.data.title}</h1>
           <p class="text-gray-500 text-center mb-4">{post.data.description}</p>
-          <img class="object-cover w-full h-full rounded-lg max-w-screen-md mx-auto" src={post.data.image} alt={post.data.title} />
+          <img transition:name={post.slug} class="object-cover w-full h-full rounded-lg max-w-screen-md mx-auto" src={post.data.image} alt={post.data.title} />
           <div class="flex items-center divide-x">
             <div class="px-5">
               <span class="rounded-lg bg-primary-100 text-primary-600 px-2 py-px text-sm font-semibold">{post.data.category}</span>
@@ -49,4 +48,3 @@ const { Content } = await post.render()
     </div>
   </div>
 </Layout>
-<!-- </BlogPost> -->

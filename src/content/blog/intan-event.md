@@ -3,7 +3,7 @@ title: Government Application Modernization using Cloud Computing Program Invita
 description: Join us on August 30th, 2023, for an insightful session on Government Application Modernization using Cloud Computing, presented by Kometsoft (M) Sdn Bhd in collaboration with INTAN.
 publishDate: Aug 17 2023
 category: news
-image: https://kometsoft.com.my/media/12/intan81.png
+image: /images/intan81.webp
 ---
 
 Kometsoft (M) Sdn Bhd in collaboration with Institut Tadbiran Awam Negara (INTAN) would like to invite you to attend the **INTAN Executive Lecture Series (Technology) - Government Application Modernization using Cloud Computing** program as follows:
