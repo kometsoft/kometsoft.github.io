@@ -22,7 +22,11 @@ const { Content } = await post.render()
           <span class="text-sm font-bold uppercase tracking-widest text-primary-500">Post</span>
           <h1 class="text-gray-800 text-2xl lg:text-3xl font-bold text-center mb-4">{post.data.title}</h1>
           <p class="text-gray-500 text-center mb-4">{post.data.description}</p>
-          <img transition:name={post.slug} class="object-cover w-full h-full rounded-lg max-w-screen-md mx-auto" src={post.data.image} alt={post.data.title} />
+          <div class="relative w-full">
+            <!-- <img transition:name={post.slug} src={post.data.image} alt={post.data.title} class="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]" /> -->
+            <img transition:name={post.slug} class="object-cover w-full h-full rounded-lg max-w-screen-md mx-auto" src={post.data.image} alt={post.data.title} />
+            <div class="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
+          </div>
           <div class="flex items-center divide-x">
             <div class="px-5">
               <span class="rounded-lg bg-primary-100 text-primary-600 px-2 py-px text-sm font-semibold">{post.data.category}</span>
