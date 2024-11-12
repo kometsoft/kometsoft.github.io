@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets'
+
 const currentPath = Astro.url.pathname
 ---
 
@@ -11,7 +13,7 @@ const currentPath = Astro.url.pathname
           </svg>
 
           <span>Kometsoft</span> -->
-        <img src="/images/kometsoft-logo.webp" class="h-10" alt="" />
+        <Image src="/images/kometsoft-logo.webp" class="h-10" alt="" height={40} width={181.2} />
       </a>
 
       <nav class="hidden lg:flex gap-12 items-center">
