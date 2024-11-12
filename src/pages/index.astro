@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro'
+import { Image } from 'astro:assets'
 ---
 
 <Layout title="Welcome to Kometsoft (M) Sdn. Bhd.">
@@ -181,24 +182,30 @@ import Layout from '../layouts/Layout.astro'
         <p class="max-w-screen-md text-gray-600 text-sm sm:text-base text-center mx-auto">Kometsoft is proud to be an AWS Select Tier Partner for Services, as well as a Public Sector Partner. We possess the necessary expertise, skillset, and experience to provide top-notch AWS consultation and managed services. Trust us to deliver solutions that meet your unique needs and exceed your expectations.</p>
       </div>
 
-      <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-8 md:gap-12 xl:gap-16">
+      <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-8 md:gap-10 xl:gap-10 place-items-center">
         <div class="flex justify-center">
-          <img src="/images/badge1.png" alt="" />
+          <Image src="/images/badge1.png" alt="" height="200" width="200" />
         </div>
         <div class="flex justify-center">
-          <img src="/images/badge2.png" alt="" />
+          <Image src="/images/badge2.png" alt="" height="200" width="200" />
         </div>
         <div class="flex justify-center">
-          <img src="/images/badge3.png" alt="" />
+          <Image src="/images/badge3.png" alt="" height="200" width="200" />
         </div>
         <div class="flex justify-center">
-          <img src="/images/badge4.png" alt="" />
+          <Image src="/images/badge4.png" alt="" height="200" width="200" />
         </div>
         <div class="flex justify-center">
-          <img src="/images/badge5.png" alt="" />
+          <Image src="/images/badge5.png" alt="" height="200" width="200" />
         </div>
         <div class="flex justify-center">
-          <img src="/images/badge6.png" alt="" />
+          <Image src="/images/badge6.png" alt="" height="200" width="200" />
+        </div>
+        <div class="grid grid-cols-subgrid gap-8 md:gap-10 xl:gap-10 col-span-6">
+          <div class="col-start-3">
+            <Image src="/images/badge6.png" alt="" height="200" width="200" />
+          </div>
+          <Image src="/images/badge6.png" alt="" height="200" width="200" />
         </div>
       </div>
       <div class="flex justify-center mt-10 space-x-2">
