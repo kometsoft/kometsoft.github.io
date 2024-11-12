@@ -24,7 +24,7 @@ import { Image } from 'astro:assets'
           <h1 class="text-gray-800 text-2xl lg:text-3xl font-bold text-center mb-4">{post.data.title}</h1>
           <p class="text-gray-500 text-center mb-4">{post.data.description}</p>
           <div class="relative w-full">
-            <Image transition:name={post.slug} class="object-cover w-full h-full rounded-2xl max-w-screen-md mx-auto" src={post.data.image} alt={post.data.title} width={704} height={396} />
+            <Image transition:name={post.slug} class="object-cover w-full h-full rounded-2xl max-w-screen-md mx-auto" src={post.data.image} alt={post.data.title} width={1800} height={1800} />
             <!-- <img transition:name={post.slug} class="object-cover w-full h-full rounded-lg max-w-screen-md mx-auto" src={post.data.image} alt={post.data.title} /> -->
             <div class="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10"></div>
           </div>

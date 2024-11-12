@@ -20,7 +20,7 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.publishDate.va
             <a href={`/blog/${post.slug}/`} class="group">
               <article class="flex flex-col items-start">
                 <div class="relative w-full">
-                  <Image transition:name={post.slug} src={post.data.image} alt={post.data.title} width={704} height={396} class="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]" />
+                  <Image transition:name={post.slug} src={post.data.image} alt={post.data.title} width={1000} height={1000} class="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]" />
                   {/* <img transition:name={post.slug} src={post.data.image} alt={post.data.title} class="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]" /> */}
                   <div class="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
                 </div>

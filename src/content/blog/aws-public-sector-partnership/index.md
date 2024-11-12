@@ -3,7 +3,7 @@ title: Kometsoft's Appointment as an AWS Public Sector Partner
 description: We are proud to announce that Kometsoft (M) Sdn Bhd has achieved the AWS Public Sector Partner
 publishDate: Jan 11 2023
 category: news
-image: /images/Group-3.webp
+image: ./Group-3.webp
 ---
 
 We are excited to announce that Kometsoft has been awarded as an AWS Public Sector Partner. This recognition highlights our expertise and success in providing innovative solutions to government and educational organizations using the Amazon Web Services platform.

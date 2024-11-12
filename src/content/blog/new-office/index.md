@@ -3,7 +3,7 @@ title: Our New Office in IOI Resort City
 description: We've moved to a new office!
 publishDate: Jul 08 2022
 category: news
-image: /images/Kometsoft-(1337)-min.webp
+image: ./Kometsoft-(1337)-min.webp
 ---
 
 We've moved to a new office. Please note our new office address and contact information.
