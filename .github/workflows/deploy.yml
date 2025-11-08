@@ -20,8 +20,30 @@ jobs:
     steps:
       - name: Checkout your repository using git
         uses: actions/checkout@v4
-      - name: Install, build, and upload your site output
-        uses: withastro/action@v1
+        # 1. Setup Node.js (Astro requires Node)
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20 # Recommended minimum Node version for modern projects
+
+      # 2. Install dependencies
+      - name: Install dependencies
+        run: npm ci
+
+      # 3. Build Astro site
+      - name: Build Astro site
+        # This assumes your package.json has a "build" script that outputs to './dist'
+        run: npm run build
+
+      # 4. Upload Pages Artifact (CRITICAL FIX)
+      # We explicitly use actions/upload-pages-artifact@v3, which replaces the deprecated internal calls.
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # The default output directory for Astro projects is 'dist'
+          path: ./dist
+      #- name: Install, build, and upload your site output
+      #uses: withastro/action@v1
         # with:
         # path: . # The root location of your Astro project inside the repository. (optional)
         # node-version: 18 # The specific version of Node that should be used to build your site. Defaults to 18. (optional)
