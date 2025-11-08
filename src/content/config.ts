@@ -13,4 +13,18 @@ const blog = defineCollection({
     }),
 })
 
-export const collections = { blog }
+const aws = defineCollection({
+  type: 'content',
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      category: z.string(),
+      icon: z.string().optional(),
+      featured: z.boolean().default(false),
+      order: z.number().default(0),
+      image: image().nullable().optional(),
+    }),
+})
+
+export const collections = { blog, aws }

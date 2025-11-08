@@ -1,0 +1,131 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import { getCollection } from 'astro:content'
+
+const awsServices = (await getCollection('aws')).sort((a, b) => a.data.order - b.data.order)
+const featuredServices = awsServices.filter(service => service.data.featured)
+
+// Group services by category
+const servicesByCategory = awsServices.reduce((acc, service) => {
+  const category = service.data.category
+  if (!acc[category]) {
+    acc[category] = []
+  }
+  acc[category].push(service)
+  return acc
+}, {} as Record<string, typeof awsServices>)
+---
+
+<Layout title="AWS Services - Kometsoft">
+  <!-- Breadcrumb -->
+  <div class="bg-gray-50 py-4">
+    <div class="max-w-screen-xl px-4 md:px-8 mx-auto">
+      <nav class="flex text-sm">
+        <a href="/" class="text-gray-500 hover:text-primary-500">Home</a>
+        <span class="mx-2 text-gray-400">/</span>
+        <a href="/aws" class="text-gray-500 hover:text-primary-500">AWS</a>
+        <span class="mx-2 text-gray-400">/</span>
+        <span class="text-gray-900">Services</span>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <div class="bg-gradient-to-br from-orange-500 to-orange-600 py-12 sm:py-16">
+    <div class="max-w-screen-xl px-4 md:px-8 mx-auto text-center text-white">
+      <h1 class="text-4xl lg:text-5xl font-bold mb-4">AWS Services</h1>
+      <p class="text-lg lg:text-xl max-w-3xl mx-auto">
+        Comprehensive cloud solutions tailored to your business needs
+      </p>
+    </div>
+  </div>
+
+  <!-- Featured Services -->
+  {featuredServices.length > 0 && (
+    <div class="bg-white py-12 sm:py-16 lg:py-20">
+      <div class="max-w-screen-xl px-4 md:px-8 mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-gray-800 text-3xl lg:text-4xl font-bold mb-4">Featured Services</h2>
+          <p class="text-gray-600 max-w-3xl mx-auto">
+            Our most popular AWS service offerings
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {featuredServices.map((service) => (
+            <a href={`/aws/services/${service.slug}`} class="group bg-white border border-gray-200 rounded-lg p-6 hover:shadow-xl transition-all hover:border-orange-500">
+              <div class="flex items-start justify-between mb-4">
+                <span class="inline-block px-3 py-1 bg-orange-100 text-orange-600 text-sm font-semibold rounded-full">
+                  {service.data.category}
+                </span>
+              </div>
+              <h3 class="text-xl font-bold mb-3 group-hover:text-orange-600 transition-colors">
+                {service.data.title}
+              </h3>
+              <p class="text-gray-600 mb-4">
+                {service.data.description}
+              </p>
+              <span class="text-orange-600 font-semibold flex items-center">
+                Learn more
+                <svg class="w-4 h-4 ml-2 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  )}
+
+  <!-- All Services by Category -->
+  <div class="bg-gray-50 py-12 sm:py-16 lg:py-20">
+    <div class="max-w-screen-xl px-4 md:px-8 mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-gray-800 text-3xl lg:text-4xl font-bold mb-4">All Services</h2>
+        <p class="text-gray-600 max-w-3xl mx-auto">
+          Browse our complete range of AWS services
+        </p>
+      </div>
+
+      {Object.entries(servicesByCategory).map(([category, services]) => (
+        <div class="mb-12 last:mb-0">
+          <h3 class="text-2xl font-bold text-gray-800 mb-6 pb-2 border-b-2 border-orange-500">
+            {category}
+          </h3>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {services.map((service) => (
+              <a href={`/aws/services/${service.slug}`} class="group bg-white border border-gray-200 rounded-lg p-5 hover:shadow-lg transition-all hover:border-orange-500">
+                <div class="flex items-start justify-between mb-3">
+                  <h4 class="text-lg font-bold group-hover:text-orange-600 transition-colors flex-1">
+                    {service.data.title}
+                  </h4>
+                  <svg class="w-5 h-5 text-orange-600 flex-shrink-0 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </div>
+                <p class="text-gray-600 text-sm line-clamp-2">
+                  {service.data.description}
+                </p>
+              </a>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="bg-gradient-to-br from-orange-500 to-orange-600 py-12 sm:py-16">
+    <div class="max-w-screen-xl px-4 md:px-8 mx-auto text-center">
+      <h2 class="text-white text-3xl lg:text-4xl font-bold mb-6">Ready to Get Started?</h2>
+      <p class="text-white text-lg mb-8 max-w-2xl mx-auto">
+        Contact us to discuss how our AWS services can help your organization achieve its goals.
+      </p>
+      <a href="/#contact-us" class="inline-block bg-white hover:bg-gray-100 text-orange-600 font-semibold text-center rounded-lg px-8 py-3 transition duration-100">
+        Contact Us Today
+      </a>
+    </div>
+  </div>
+</Layout>
+
