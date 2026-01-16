@@ -18,6 +18,8 @@
     "@tailwindcss/typography": "^0.5.13"
   },
   "overrides": {
-    "glob": "^10.4.2"
+    "glob": "^10.4.2",
+    "h3": "^1.15.5",
+    "devalue": "^5.6.2"
   }
 }
