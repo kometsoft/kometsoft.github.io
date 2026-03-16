@@ -10,12 +10,12 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/tailwind": "^5.1.2",
-    "astro": "^5.16.0",
-    "tailwindcss": "^3.4.4"
+    "astro": "^6.0.4",
+    "tailwindcss": "^4.2.1"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.13"
+    "@tailwindcss/postcss": "^4.2.1",
+    "@tailwindcss/typography": "^0.5.19"
   },
   "overrides": {
     "glob": "^10.4.2",
