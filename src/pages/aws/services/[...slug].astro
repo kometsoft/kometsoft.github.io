@@ -1,21 +1,21 @@
 ---
 import Layout from '../../../layouts/Layout.astro'
-import { getCollection } from 'astro:content'
+import { getCollection, render } from 'astro:content'
 
 export async function getStaticPaths() {
   const awsServices = await getCollection('aws')
   return awsServices.map((service) => ({
-    params: { slug: service.slug },
+    params: { slug: service.id },
     props: { service },
   }))
 }
 
 const { service } = Astro.props
-const { Content } = await service.render()
+const { Content } = await render(service)
 
 const allServices = await getCollection('aws')
 const relatedServices = allServices
-  .filter((s) => s.slug !== service.slug && s.data.category === service.data.category)
+  .filter((s) => s.id !== service.id && s.data.category === service.data.category)
   .slice(0, 3)
 ---
 
@@ -102,7 +102,7 @@ const relatedServices = allServices
               <h3 class="text-xl font-bold text-gray-900 mb-4">Related Services</h3>
               <div class="space-y-4">
                 {relatedServices.map((related) => (
-                  <a href={`/aws/services/${related.slug}`} class="block group">
+                  <a href={`/aws/services/${related.id}`} class="block group">
                     <div class="bg-white rounded-lg p-4 hover:shadow-md transition-all border border-gray-200 hover:border-orange-500">
                       <h4 class="font-semibold text-gray-900 mb-2 group-hover:text-orange-600 transition-colors">
                         {related.data.title}
