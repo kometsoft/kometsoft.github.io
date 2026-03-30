@@ -23,11 +23,12 @@ import { Image } from 'astro:assets'
           <span class="text-sm font-bold uppercase tracking-widest text-primary-500">Post</span>
           <h1 class="text-gray-800 text-2xl lg:text-3xl font-bold text-center mb-4">{post.data.title}</h1>
           <p class="text-gray-500 text-center mb-4">{post.data.description}</p>
-          <div class="relative w-full">
-            <Image transition:name={post.id} class="object-cover w-full h-full rounded-2xl max-w-screen-md mx-auto" src={post.data.image} alt={post.data.title} width={1800} height={1800} />
-            <!-- <img transition:name={post.id} class="object-cover w-full h-full rounded-lg max-w-screen-md mx-auto" src={post.data.image} alt={post.data.title} /> -->
-            <div class="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10"></div>
-          </div>
+          {post.data.image && (
+            <div class="relative w-full">
+              <Image transition:name={post.id} class="object-cover w-full h-full rounded-2xl max-w-screen-md mx-auto" src={post.data.image} alt={post.data.title} width={1800} height={1800} />
+              <div class="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10"></div>
+            </div>
+          )}
           <div class="flex items-center divide-x">
             <div class="px-5">
               <span class="rounded-lg bg-primary-100 text-primary-600 px-2 py-px text-sm font-semibold">{post.data.category}</span>

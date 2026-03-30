@@ -1,0 +1,17 @@
+---
+/** Decap CMS UI — /admin must be a page route; public/admin/index.html is not served for bare /admin in dev. */
+export const prerender = true
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Content · Kometsoft</title>
+  </head>
+  <body>
+    <script src="https://unpkg.com/decap-cms@3.4.0/dist/decap-cms.js"></script>
+  </body>
+</html>

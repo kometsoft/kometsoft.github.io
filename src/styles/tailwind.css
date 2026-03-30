@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+/* So utility classes in Markdown/MDX (e.g. LinkedIn embed wrappers) are generated */
+@source "../content/**/*.{md,mdx}";
+@source "../pages/**/*.astro";
+@source "../layouts/**/*.astro";
+@source "../components/**/*.astro";
+
 @plugin "@tailwindcss/typography";
 
 @theme {

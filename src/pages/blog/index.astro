@@ -4,6 +4,31 @@ import Layout from '../../layouts/Layout.astro'
 import { Image } from 'astro:assets'
 
 const posts = (await getCollection('blog')).sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
+
+/** Show segments in this order; any other category sorts after, alphabetically */
+const categoryOrder = ['event', 'events', 'news', 'announcement', 'update']
+function categoryRank(cat: string) {
+  const i = categoryOrder.indexOf(cat.toLowerCase())
+  return i === -1 ? categoryOrder.length : i
+}
+function categoryLabel(cat: string) {
+  return cat.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
+}
+
+const postsByCategory = new Map<string, typeof posts>()
+for (const post of posts) {
+  const key = post.data.category
+  const list = postsByCategory.get(key) ?? []
+  list.push(post)
+  postsByCategory.set(key, list)
+}
+
+const categories = [...postsByCategory.keys()].sort((a, b) => {
+  const ra = categoryRank(a)
+  const rb = categoryRank(b)
+  if (ra !== rb) return ra - rb
+  return a.localeCompare(b)
+})
 ---
 
 <Layout title="Events">
@@ -14,37 +39,60 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.publishDate.va
         <p class="max-w-screen-md text-gray-500 text-sm sm:text-base text-center mx-auto">Stay updated with the latest info and tech updates.</p>
       </div>
 
-      <div class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-10 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+      <div class="mx-auto mt-16 space-y-16 lg:space-y-20">
         {
-          posts.map((post) => (
-            <a href={`/blog/${post.id}/`} class="group">
-              <article class="flex flex-col items-start">
-                <div class="relative w-full">
-                  <Image transition:name={post.id} src={post.data.image} alt={post.data.title} width={1000} height={1000} class="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]" />
-                  {/* <img transition:name={post.id} src={post.data.image} alt={post.data.title} class="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]" /> */}
-                  <div class="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
+          categories.map((category) => {
+            const sectionPosts = postsByCategory.get(category) ?? []
+            const headingId = `blog-section-${category.replace(/\s+/g, '-').toLowerCase()}`
+            return (
+              <section class="scroll-mt-24" aria-labelledby={headingId}>
+                <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2 border-b-2 border-primary-500 pb-3 mb-8 lg:mb-10">
+                  <h3 id={headingId} class="text-xl sm:text-2xl font-bold text-gray-900">
+                    {categoryLabel(category)}
+                  </h3>
+                  <p class="text-sm text-gray-500">{sectionPosts.length} {sectionPosts.length === 1 ? 'item' : 'items'}</p>
                 </div>
-                <div class="w-full">
-                  <div class="mt-4 flex items-center justify-between">
-                    <span class="rounded-lg bg-primary-100 text-primary-600 px-2 py-px text-sm font-semibold">{post.data.category}</span>
-                    <span class="text-sm text-gray-500">
-                      <time datetime={post.data.publishDate.toISOString()}>
-                        {post.data.publishDate.toLocaleDateString('en-us', {
-                          year: 'numeric',
-                          month: 'short',
-                          day: 'numeric',
-                        })}
-                      </time>
-                    </span>
-                  </div>
-                  <div class="relative">
-                    <h3 class="mt-3 text-xl font-bold leading-6 group-hover:underline group-hover:text-primary-500 transition ease-in-out">{post.data.title}</h3>
-                    <p class="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">{post.data.description}</p>
-                  </div>
+                <div class="grid max-w-2xl grid-cols-1 gap-x-10 gap-y-12 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+                  {sectionPosts.map((post) => (
+                    <a href={`/blog/${post.id}/`} class="group">
+                      <article class="flex flex-col items-start">
+                        <div class="relative w-full">
+                          {post.data.image ? (
+                            <>
+                              <Image transition:name={post.id} src={post.data.image} alt={post.data.title} width={1000} height={1000} class="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]" />
+                              <div class="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
+                            </>
+                          ) : (
+                            <div class="flex aspect-[16/9] w-full items-center justify-center rounded-2xl bg-slate-100 text-slate-500 ring-1 ring-inset ring-gray-900/10 sm:aspect-[2/1] lg:aspect-[3/2]">
+                              <span class="text-sm font-semibold tracking-wide">LinkedIn</span>
+                            </div>
+                          )}
+                        </div>
+                        <div class="w-full">
+                          <div class="mt-4 flex items-center justify-between">
+                            <span class="rounded-lg bg-primary-100 text-primary-600 px-2 py-px text-sm font-semibold">{post.data.category}</span>
+                            <span class="text-sm text-gray-500">
+                              <time datetime={post.data.publishDate.toISOString()}>
+                                {post.data.publishDate.toLocaleDateString('en-us', {
+                                  year: 'numeric',
+                                  month: 'short',
+                                  day: 'numeric',
+                                })}
+                              </time>
+                            </span>
+                          </div>
+                          <div class="relative">
+                            <h4 class="mt-3 text-xl font-bold leading-6 group-hover:underline group-hover:text-primary-500 transition ease-in-out">{post.data.title}</h4>
+                            <p class="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">{post.data.description}</p>
+                          </div>
+                        </div>
+                      </article>
+                    </a>
+                  ))}
                 </div>
-              </article>
-            </a>
-          ))
+              </section>
+            )
+          })
         }
       </div>
     </div>

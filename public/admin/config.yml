@@ -1,0 +1,48 @@
+# Decap CMS — edit events/news in the browser at https://YOUR_SITE/admin/
+#
+# Before login works on GitHub Pages you MUST:
+# 1) Deploy an OAuth proxy (e.g. https://github.com/sterlingwes/decap-proxy on Cloudflare Workers)
+# 2) Set `base_url` below to that proxy URL (not your marketing site URL)
+# See CONTENT_ADMIN.md in the repo root.
+
+backend:
+  name: github
+  repo: kometsoft/kometsoft.github.io
+  branch: main
+  # Replace with your Cloudflare Worker URL after deploying decap-proxy (ends with .workers.dev or your custom host)
+  base_url: https://REPLACE_WITH_OAUTH_PROXY_URL
+  auth_endpoint: /auth
+
+# Optional: future uploads from the CMS (hero images, etc.)
+media_folder: public/uploads
+public_folder: /uploads
+
+collections:
+  - name: online_events
+    label: Events & news (online editor)
+    label_singular: post
+    folder: src/content/blog/online-events
+    create: true
+    slug: '{{fields.slug}}'
+    extension: md
+    format: frontmatter
+    identifier_field: title
+    summary: '{{title}} — {{publishDate}}'
+    fields:
+      - label: URL slug (appears in /blog/online-events/…)
+        name: slug
+        widget: string
+        hint: Lowercase, dashes only, e.g. company-update-march-2026
+        pattern: ['^[a-z0-9]+(?:-[a-z0-9]+)*$', 'Use lowercase letters, numbers, and dashes only']
+      - { label: Title, name: title, widget: string }
+      - { label: Description, name: description, widget: text, hint: Short text for the card on /blog }
+      - { label: Publish date, name: publishDate, widget: datetime }
+      - { label: Category, name: category, widget: select, options: [event, news], default: event }
+      - label: Body
+        name: body
+        widget: markdown
+        hint: Paste the full <iframe …> from LinkedIn (⋯ → Embed this post). Optional text above/below is fine.
+        default: |
+          <div class="not-prose my-8 flex justify-center">
+            <iframe src="PASTE_LINKEDIN_EMBED_URL_HERE" height="857" width="504" frameborder="0" allowfullscreen="" title="Embedded LinkedIn post" style="max-width: 100%; border: 0"></iframe>
+          </div>
