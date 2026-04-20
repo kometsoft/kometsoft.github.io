@@ -11,10 +11,10 @@
   },
   "dependencies": {
     "astro": "^6.1.8",
-    "tailwindcss": "^4.2.2"
+    "tailwindcss": "^4.2.3"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.2.2",
+    "@tailwindcss/postcss": "^4.2.3",
     "@tailwindcss/typography": "^0.5.19"
   },
   "overrides": {
