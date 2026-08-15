@@ -434,9 +434,15 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.publishDate.va
         </div>
 
         <div class="lg:max-w-lg p-6 lg:px-10 lg:py-12 bg-white text-center border rounded-xl w-full">
-          <form id="hubspot-form">
+          <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="b6692be3-0ae7-495b-bb87-6cb48f47e8c5" />
+            <input type="hidden" name="subject" value="New Contact Form Submission - Kometsoft" />
+            <input type="hidden" name="from_name" value="Kometsoft Website" />
+            <!-- Honeypot spam protection -->
+            <input type="checkbox" name="botcheck" class="hidden" style="display: none;" />
+
             <div class="relative flex flex-wrap mb-6">
-              <input class="relative mb-2 md:mb-0 w-full py-4 pl-4 border border-gray-300 rounded-lg placeholder-gray-400 focus:border-primary-500 focus:ring-primary-500" type="text" name="full_name" placeholder="John" required />
+              <input class="relative mb-2 md:mb-0 w-full py-4 pl-4 border border-gray-300 rounded-lg placeholder-gray-400 focus:border-primary-500 focus:ring-primary-500" type="text" name="name" placeholder="John" required />
               <span class="absolute top-0 left-0 ml-4 -mt-2 px-2 inline-block text-sm bg-white text-gray-600">Name</span>
             </div>
 
@@ -450,13 +456,16 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.publishDate.va
               <span class="absolute top-0 left-0 ml-4 -mt-2 px-2 inline-block text-sm bg-white text-gray-600">Messages</span>
             </div>
 
-            <button type="submit" class="w-full inline-flex items-center justify-center space-x-2 bg-primary-500 hover:bg-primary-600 text-primary-50 focus-visible:ring ring-primary-300 active:text-primary-200 text-sm sm:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3">
+            <button type="submit" id="submit-btn" class="w-full inline-flex items-center justify-center space-x-2 bg-primary-500 hover:bg-primary-600 text-primary-50 focus-visible:ring ring-primary-300 active:text-primary-200 text-sm sm:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3">
               <svg class="fill-current h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
                 <path fill="none" d="M0 0h24v24H0z"></path>
                 <path d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"></path>
               </svg>
               <span>Send</span>
             </button>
+
+            <div id="form-success" class="hidden mt-4 p-3 bg-green-100 text-green-700 rounded-lg text-sm">Thank you! Your message has been sent successfully.</div>
+            <div id="form-error" class="hidden mt-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm">Something went wrong. Please try again later.</div>
 
             <p class="text-gray-500 text-center mt-4">By using this form, you agree to our <br /> <a href="/terms" class="hover:text-primary-500 active:text-primary-600 underline transition duration-100">Term of Service</a> and <a href="/privacy" class="hover:text-primary-500 active:text-primary-600 underline transition duration-100">Privacy Policy</a>.</p>
           </form>
@@ -472,6 +481,42 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.publishDate.va
       </div>
     </div>
   </div>
+
+  <script>
+    const form = document.getElementById('contact-form') as HTMLFormElement;
+    const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+    const successMsg = document.getElementById('form-success') as HTMLElement;
+    const errorMsg = document.getElementById('form-error') as HTMLElement;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>Sending...</span>';
+      successMsg.classList.add('hidden');
+      errorMsg.classList.add('hidden');
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          successMsg.classList.remove('hidden');
+          form.reset();
+        } else {
+          errorMsg.classList.remove('hidden');
+        }
+      } catch {
+        errorMsg.classList.remove('hidden');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<svg class="fill-current h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"></path></svg><span>Send</span>`;
+      }
+    });
+  </script>
 
   <script src="//js.hs-scripts.com/21997511.js" id="hs-script-loader" defer async></script>
 </Layout>
