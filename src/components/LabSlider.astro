@@ -1,0 +1,145 @@
+---
+interface Slide {
+  src: string
+  alt: string
+}
+
+interface Props {
+  slides: Slide[]
+  label?: string
+  interval?: number
+}
+
+const { slides, label = 'Photo gallery', interval = 5000 } = Astro.props
+---
+
+<div
+  class="lab-slider relative h-64 md:h-auto md:aspect-[4/3] overflow-hidden rounded-lg shadow-lg bg-gray-100"
+  role="region"
+  aria-roledescription="carousel"
+  aria-label={label}
+  tabindex="0"
+  data-interval={interval}
+>
+  <div class="slider-track flex h-full transition-transform duration-500 ease-out motion-reduce:transition-none" aria-live="polite">
+    {slides.map((slide, i) => (
+      <div
+        class="slider-slide w-full h-full flex-shrink-0"
+        role="group"
+        aria-roledescription="slide"
+        aria-label={`${i + 1} of ${slides.length}`}
+        aria-hidden={i === 0 ? 'false' : 'true'}
+      >
+        <img
+          src={slide.src}
+          alt={slide.alt}
+          width="1080"
+          height="810"
+          loading={i === 0 ? 'eager' : 'lazy'}
+          decoding="async"
+          draggable="false"
+          class="w-full h-full object-cover object-center select-none"
+        />
+      </div>
+    ))}
+  </div>
+
+  <button
+    type="button"
+    class="slider-prev absolute left-3 top-1/2 -translate-y-1/2 flex items-center justify-center w-10 h-10 rounded-full bg-white/80 hover:bg-white text-gray-800 shadow focus-visible:ring ring-primary-300 outline-none transition duration-100"
+    aria-label="Previous photo"
+  >
+    <svg class="w-5 h-5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M10.828 12l4.95 4.95-1.414 1.414L8 12l6.364-6.364 1.414 1.414z"></path>
+    </svg>
+  </button>
+  <button
+    type="button"
+    class="slider-next absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center w-10 h-10 rounded-full bg-white/80 hover:bg-white text-gray-800 shadow focus-visible:ring ring-primary-300 outline-none transition duration-100"
+    aria-label="Next photo"
+  >
+    <svg class="w-5 h-5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M13.172 12l-4.95-4.95 1.414-1.414L16 12l-6.364 6.364-1.414-1.414z"></path>
+    </svg>
+  </button>
+
+  <div class="absolute bottom-3 left-0 right-0 flex justify-center gap-2">
+    {slides.map((_, i) => (
+      <button
+        type="button"
+        class="slider-dot w-3 h-3 rounded-full bg-white/60 hover:bg-white aria-[current=true]:bg-white shadow focus-visible:ring ring-primary-300 outline-none transition duration-100"
+        aria-label={`Show photo ${i + 1}`}
+        aria-current={i === 0 ? 'true' : 'false'}
+        data-index={i}
+      ></button>
+    ))}
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.lab-slider').forEach((root) => {
+    const track = root.querySelector<HTMLElement>('.slider-track')!
+    const slides = Array.from(root.querySelectorAll<HTMLElement>('.slider-slide'))
+    const dots = Array.from(root.querySelectorAll<HTMLButtonElement>('.slider-dot'))
+    const total = slides.length
+    const interval = Number(root.dataset.interval) || 5000
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+    let index = 0
+    let timer: number | undefined
+    let hovered = false
+    let focused = false
+
+    const goTo = (i: number) => {
+      index = (i + total) % total
+      track.style.transform = `translateX(-${index * 100}%)`
+      slides.forEach((s, n) => s.setAttribute('aria-hidden', n === index ? 'false' : 'true'))
+      dots.forEach((d, n) => d.setAttribute('aria-current', n === index ? 'true' : 'false'))
+    }
+
+    const stop = () => {
+      if (timer !== undefined) window.clearInterval(timer)
+      timer = undefined
+    }
+    const start = () => {
+      stop()
+      if (reduceMotion.matches || hovered || focused || total < 2) return
+      timer = window.setInterval(() => goTo(index + 1), interval)
+    }
+
+    root.querySelector('.slider-prev')!.addEventListener('click', () => { goTo(index - 1); start() })
+    root.querySelector('.slider-next')!.addEventListener('click', () => { goTo(index + 1); start() })
+    dots.forEach((d) => d.addEventListener('click', () => { goTo(Number(d.dataset.index)); start() }))
+
+    root.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(index - 1) }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); goTo(index + 1) }
+    })
+
+    // Pause autoplay while the user hovers or focuses inside the slider
+    root.addEventListener('mouseenter', () => { hovered = true; stop() })
+    root.addEventListener('mouseleave', () => { hovered = false; start() })
+    root.addEventListener('focusin', () => { focused = true; stop() })
+    root.addEventListener('focusout', (e) => {
+      if (!root.contains(e.relatedTarget as Node)) { focused = false; start() }
+    })
+    reduceMotion.addEventListener('change', start)
+
+    // Touch swipe
+    let startX = 0
+    let startY = 0
+    root.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX
+      startY = e.touches[0].clientY
+      stop()
+    }, { passive: true })
+    root.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - startX
+      const dy = e.changedTouches[0].clientY - startY
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) goTo(dx < 0 ? index + 1 : index - 1)
+      start()
+    }, { passive: true })
+
+    goTo(0)
+    start()
+  })
+</script>

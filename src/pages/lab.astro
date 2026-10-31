@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro'
+import LabSlider from '../components/LabSlider.astro'
 ---
 
 <Layout title="Lab Facility">
@@ -45,7 +46,7 @@ import Layout from '../layouts/Layout.astro'
                 <path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-.997-6l7.07-7.071-1.414-1.414-5.656 5.657-2.829-2.829-1.414 1.414L11.003 16z"></path>
               </svg>
 
-              <span>1 projector with screen</span>
+              <span>2 large display TVs</span>
             </li>
             <li class="flex pl-0 space-x-2 items-center">
               <svg class="flex-shrink-0 w-5 h-5 text-success-500 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
@@ -90,9 +91,14 @@ import Layout from '../layouts/Layout.astro'
           </ul>
         </div>
         <div>
-          <div class="h-64 md:h-auto overflow-hidden rounded-lg shadow-lg">
-            <img src="/images/lab.jpeg" alt="Kometsoft lab" class="w-full h-full object-cover object-center" />
-          </div>
+          <LabSlider
+            label="Kometsoft lab facility photos"
+            slides={[
+              { src: '/images/lab-1.webp', alt: 'Kometsoft training lab – classroom layout front view with rows of desks and chairs' },
+              { src: '/images/lab-2.webp', alt: 'Kometsoft training lab – side view of the classroom with Kometsoft banners at the back' },
+              { src: '/images/lab-3.webp', alt: 'Kometsoft lab dining area with tables and chairs by the windows' },
+            ]}
+          />
         </div>
       </div>
     </div>
