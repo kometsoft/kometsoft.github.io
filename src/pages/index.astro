@@ -291,8 +291,8 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.publishDate.va
         </div>
       </div>
       <div class="flex justify-center mt-10 space-x-2">
-        <a class="bg-primary-500 hover:bg-primary-600 text-primary-50 focus-visible:ring ring-primary-300 active:text-primary-200 text-sm sm:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3" href="https://partners.amazonaws.com/partners/0010L00001tBChWQAW/Kometsoft%20(M)%20Sdn.%20Bhd" target="_blank">Visit Kometsoft's partner page</a>
-        <a class="bg-primary-500 hover:bg-primary-600 text-primary-50 focus-visible:ring ring-primary-300 active:text-primary-200 text-sm sm:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3" href="/aws" target="_blank">AWS QuickSight</a>
+        <a class="bg-primary-500 hover:bg-primary-600 text-primary-50 focus-visible:ring ring-primary-300 active:text-primary-200 text-sm sm:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3" href="https://partners.amazonaws.com/partners/0010L00001tBChWQAW/Kometsoft%20(M)%20Sdn.%20Bhd" target="_blank" rel="noopener noreferrer">Visit Kometsoft's partner page</a>
+        <a class="bg-primary-500 hover:bg-primary-600 text-primary-50 focus-visible:ring ring-primary-300 active:text-primary-200 text-sm sm:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3" href="/aws" target="_blank" rel="noopener noreferrer">AWS QuickSight</a>
       </div>
     </div>
   </div>
@@ -307,25 +307,25 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.publishDate.va
       <div class="max-w-screen-md mx-auto">
         <div class="flex flex-wrap justify-center">
           <div class="m-6 w-28 md:w-28 h-28 md:h-28 flex justify-center items-center shrink-0 bg-white text-white rounded-2xl shadow-xl border border-gray-200 hover:scale-110 transform duration-150 ease-in-out hover:shadow-5xl">
-            <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/4%20PNG/3%20RGB/1%20Full%20Color/laravel-logolockup-rgb-red.png" class="w-auto h-7" alt="" />
+            <img src="/images/laravel-logo.png" class="w-auto h-7" alt="" />
           </div>
            <div class="m-6 w-28 md:w-28 h-28 md:h-28 flex justify-center items-center shrink-0 bg-white text-white rounded-2xl shadow-xl border border-gray-200 hover:scale-110 transform duration-150 ease-in-out hover:shadow-5xl">
             <img src="images/vue.js.png" class="w-auto h-14" alt="" />
           </div>
           <div class="m-6 w-28 md:w-28 h-28 md:h-28 flex justify-center items-center shrink-0 bg-white text-white rounded-2xl shadow-xl border border-gray-200 hover:scale-110 transform duration-150 ease-in-out hover:shadow-5xl">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" class="w-auto h-10" alt="" />
+            <img src="/images/aws-logo.svg" class="w-auto h-10" alt="" />
           </div>
           <div class="m-6 w-28 md:w-28 h-28 md:h-28 flex justify-center items-center shrink-0 bg-white text-white rounded-2xl shadow-xl border border-gray-200 hover:scale-110 transform duration-150 ease-in-out hover:shadow-5xl">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Ionic_Logo.svg" class="w-auto h-7" alt="" />
+            <img src="/images/ionic-logo.svg" class="w-auto h-7" alt="" />
           </div>
           <div class="m-6 w-28 md:w-28 h-28 md:h-28 flex justify-center items-center shrink-0 bg-white text-white rounded-2xl shadow-xl border border-gray-200 hover:scale-110 transform duration-150 ease-in-out hover:shadow-5xl">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/3/35/Tux.svg" class="w-auto h-14" alt="" />
+            <img src="/images/tux.svg" class="w-auto h-14" alt="" />
           </div>
           <div class="m-6 w-28 md:w-28 h-28 md:h-28 flex justify-center items-center shrink-0 bg-white text-white rounded-2xl shadow-xl border border-gray-200 hover:scale-110 transform duration-150 ease-in-out hover:shadow-5xl">
             <img src="images/nginx.png" class="w-auto h-14" alt="" />
           </div>
           <div class="m-6 w-28 md:w-28 h-28 md:h-28 flex justify-center items-center shrink-0 bg-white text-white rounded-2xl shadow-xl border border-gray-200 hover:scale-110 transform duration-150 ease-in-out hover:shadow-5xl">
-            <img src="https://www.mysql.com/common/logos/logo-mysql-170x115.png" class="w-auto h-11" alt="" />
+            <img src="/images/mysql-logo.png" class="w-auto h-11" alt="" />
           </div>
            <div class="m-6 w-28 md:w-28 h-28 md:h-28 flex justify-center items-center shrink-0 bg-white text-white rounded-2xl shadow-xl border border-gray-200 hover:scale-110 transform duration-150 ease-in-out hover:shadow-5xl">
             <img src="/images/postgres.png" class="w-auto h-16" alt="" />
@@ -439,7 +439,7 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.publishDate.va
             <input type="hidden" name="subject" value="New Contact Form Submission - Kometsoft" />
             <input type="hidden" name="from_name" value="Kometsoft Website" />
             <!-- Honeypot spam protection -->
-            <input type="checkbox" name="botcheck" class="hidden" style="display: none;" />
+            <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" />
 
             <div class="relative flex flex-wrap mb-6">
               <input class="relative mb-2 md:mb-0 w-full py-4 pl-4 border border-gray-300 rounded-lg placeholder-gray-400 focus:border-primary-500 focus:ring-primary-500" type="text" name="name" placeholder="John" required />
@@ -477,7 +477,7 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.publishDate.va
   <div class="bg-white py-6 sm:py-8 lg:py-20">
     <div class="max-w-screen-xl px-4 md:px-8 mx-auto">
       <div class="bg-gray-100 rounded-lg overflow-hidden">
-        <iframe title="Kometsoft's office map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3984.472689854699!2d101.71819231475679!3d2.9662587978396506!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cdc9ee24e5632b%3A0x94f73f0d7a8134d0!2sKometsoft%20(M)%20Sdn%20Bhd!5e0!3m2!1sen!2smy!4v1666341924683!5m2!1sen!2smy" width="100%" height="450" style="border: 0" allowfullscreen="" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <iframe title="Kometsoft's office map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3984.472689854699!2d101.71819231475679!3d2.9662587978396506!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cdc9ee24e5632b%3A0x94f73f0d7a8134d0!2sKometsoft%20(M)%20Sdn%20Bhd!5e0!3m2!1sen!2smy!4v1666341924683!5m2!1sen!2smy" class="w-full border-0" width="100%" height="450" allowfullscreen="" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
     </div>
   </div>
@@ -518,5 +518,5 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.publishDate.va
     });
   </script>
 
-  <script src="//js.hs-scripts.com/21997511.js" id="hs-script-loader" defer async></script>
+  <script src="https://js.hs-scripts.com/21997511.js" id="hs-script-loader" defer async></script>
 </Layout>

@@ -60,6 +60,11 @@
   --color-danger-950: var(--color-red-950);
 }
 
+/* Native cross-document view transitions (replaces Astro's ClientRouter, which is incompatible with CSP) */
+@view-transition {
+  navigation: auto;
+}
+
 /* Replaces tailwind.config.mjs typography prose customization */
 .prose a {
   word-wrap: break-word;
